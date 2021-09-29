@@ -1,4 +1,18 @@
 <?php
+error_reporting(E_ALL);
+
+define ("minuteInSeconds", 60);
+define ("hourInSeconds",   60*60);
+define ("dayInSeconds",    60*60*24);
+define ("J2Ugap", 42531868800);
+
+$yearConstant = (365.24219878 * dayInSeconds); //
+$monthDays = array(31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
+
+
+
+
+
 
 function getPersianDate($Utimestamp) {
     $Jtimestamp = unixToJalaliTimestamp($Utimestamp);
@@ -28,17 +42,23 @@ function getPersianDate($Utimestamp) {
     return $year . "/" . $month . "/" . $day . " " . $hour . ":" . $minute . ":" . $second;
 }
 
-
-function unixToJalaliTimestamp($Utimestamp) {
-    return $Utimestamp + 42531868800;
+function Jmktime($year, $month, $day, $hour = 0, $minute = 0, $second = 0) {
+    global $yearConstant, $monthDays;
+    $Utimestamp = round((($year-1) * $yearConstant)/dayInSeconds) * dayInSeconds+ 
+                    array_sum(array_slice($monthDays, 0, $month-1)) * dayInSeconds + 
+                    ($day - 1) * dayInSeconds + 
+                    ($hour) * hourInSeconds +
+                    ($minute) * minuteInSeconds +
+                    $second
+                    - J2Ugap;
+    return $Utimestamp;
 }
 
-$yearConstant = (365.24219878 * 24*60*60); //
-$monthDays = array(31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
+function unixToJalaliTimestamp($Utimestamp) {
+    return $Utimestamp + J2Ugap;
+}
 
-define ("minuteInSeconds", 60);
-define ("hourInSeconds",   60*60);
-define ("dayInSeconds",    60*60*24);
+
 
 
 function getYear($Jtimestamp) {
