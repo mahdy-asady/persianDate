@@ -1,27 +1,27 @@
 <?php
 
-function getPersianDate($timestamp) {
-    $JT = shiftTimestampToJalali($timestamp);
+function getPersianDate($Utimestamp) {
+    $Jtimestamp = unixToJalaliTimestamp($Utimestamp);
 
-    $year = getYear($JT);
+    $year = getYear($Jtimestamp);
 
-    $JT = minusYear($JT);
+    $Jtimestamp = minusYear($Jtimestamp);
 
-    $month = getMonth($JT);
+    $month = getMonth($Jtimestamp);
 
-    $JT = minusMonth($JT);
+    $Jtimestamp = minusMonth($Jtimestamp);
 
-    $day = getDay($JT);
+    $day = getDay($Jtimestamp);
 
-    $JT = minusDay($JT);
+    $Jtimestamp = minusDay($Jtimestamp);
 
-    $hour = getHour($JT);
+    $hour = getHour($Jtimestamp);
 
-    $JT = minusHour($JT);
+    $Jtimestamp = minusHour($Jtimestamp);
 
-    $minute = getMinute($JT);
+    $minute = getMinute($Jtimestamp);
 
-    $second = minusMinute($JT);
+    $second = minusMinute($Jtimestamp);
 
 
 
@@ -29,8 +29,8 @@ function getPersianDate($timestamp) {
 }
 
 
-function shiftTimestampToJalali($timestamp) {
-    return $timestamp + 42531868800;
+function unixToJalaliTimestamp($Utimestamp) {
+    return $Utimestamp + 42531868800;
 }
 
 $yearConstant = (365.24219878 * 24*60*60); //
